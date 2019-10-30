@@ -12,15 +12,10 @@ model = Sequential()
 model.add(Dense(32, activation='sigmoid', input_dim=784))
 model.add(Dense(32, activation='sigmoid', input_dim=784))
 model.add(Dense(10, activation='softmax'))
-model.compile(optimizer='rmsprop',
-              loss='categorical_crossentropy',
-              metrics=['accuracy'])
+model.compile(optimizer='rmsprop', loss='categorical_crossentropy', metrics=['accuracy'])
 
-
-########  MODEL TRAINING ############
 model.fit(data.get_X_train(), data.get_Y_train(), epochs=20, batch_size=32, verbose=2)
 
-########  MODEL TEST ############
-prediction = model.predict(data.get_X_test()[:2], verbose=1)
+prediction = model.predict(data.get_X_test(), verbose=1)
 
 print(np.argmax(prediction, axis=1))
