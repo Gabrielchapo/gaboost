@@ -1,10 +1,13 @@
-# Project Title
+# Machine Learning from scratch
 
-One Paragraph of project description goes here
+The objective is to implement a Neural Network for classification problem.
+
+In Python => Folder Python
+In C      => foldef C (work in progress)
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+You need to download the MNIST DATASET (Train and test separated) in json encoded and put it in /data file
 
 ### Prerequisites
 
