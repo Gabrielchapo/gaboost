@@ -1,13 +1,10 @@
 import numpy as np
 
 
-def cross_entropy(pred, real):
-    n_samples = real.shape[0]
-    res = pred - real
-    return res/n_samples
+def cross_entropy(Y_pred, Y_real):
+    diff = Y_pred - Y_real
+    return diff / Y_real.shape[0]
 
-def error(pred, real):
-    n_samples = real.shape[0]
-    logp = - np.log(pred[np.arange(n_samples), real.argmax(axis=1)])
-    loss = np.sum(logp)/n_samples
-    return loss
+def error(Y_pred, Y_real):
+    logged = - np.log(Y_pred[np.arange(Y_real.shape[0]), Y_real.argmax(axis=1)])
+    return np.sum(logged) / Y_real.shape[0]
