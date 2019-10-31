@@ -11,13 +11,17 @@ class MyNN:
 
     def feedforward(self):
         tmp = self.input
-        for attribut in self.layers:
-            z = np.dot(tmp, attribut["theta"]) + attribut["bias"]
-            if attribut["activation"] == "sigmoid":
-                self.activated[attribut["name"]] = sigmoid(z)
-            elif attribut["activation"] == "softmax":
-                self.activated[attribut["name"]] = softmax(z)
-            tmp = self.activated[attribut["name"]]
+        for layer in self.layers:
+            name = layer["name"]
+            z = np.dot(tmp, layer["theta"]) + layer["bias"]
+            if layer["activation"] == "sigmoid":
+                self.activated[name] = sigmoid(z)
+            elif layer["activation"] == "softmax":
+                self.activated[name] = softmax(z)
+            else:
+                print("Error: Unknown or invalid activation function")
+                return
+            tmp = self.activated[name]
 
     def backprop(self):
         activated = None
@@ -26,8 +30,7 @@ class MyNN:
             if activated is None:
                 self.activated_delta[name] = cross_entropy(self.activated[name], self.output)
             else:
-                self.theta_delta[name] = np.dot(activated, tmp)
-                self.activated_delta[name] = self.theta_delta[name] * sigmoid_derv(self.activated[name])
+                self.activated_delta[name] = np.dot(activated, tmp) * sigmoid_derv(self.activated[name])
             tmp = attribut["theta"].T
             activated = self.activated_delta[name]
 
@@ -47,7 +50,8 @@ class MyNN:
     def predict(self, data):
         self.input = data
         self.feedforward()
-        return self.activated[self.layers[self.nb_layers - 1]["name"]].tolist()
+        name = self.layers[self.nb_layers - 1]["name"]
+        return self.activated[name].tolist()
 
     def add_layer(self, size, activation, input_dim=None):
 
@@ -59,12 +63,9 @@ class MyNN:
                 print("First layer need an input dimension")
                 return
         else:
-            i = 0
-            for attribut in self.layers:
-                i += 1
-                pass
+            i = self.nb_layers
             layer["name"] = "layer_" + str(i)
-            input_dim = attribut['theta'].shape[1]
+            input_dim = self.layers[i - 1]['theta'].shape[1]
 
         layer['activation'] = activation
         layer['theta'] = np.random.randn(input_dim, size)
@@ -81,7 +82,6 @@ class MyNN:
         self.loss = loss
         self.activated = {}
         self.activated_delta = {}
-        self.theta_delta = {}
 
     def fit(self, X, Y, epoch, verbose=0):
 
@@ -105,7 +105,14 @@ class MyNN:
         except:
             print("Error: json file not found")
         content = json.loads(content)
-        self.layers = content
+        for attribut in content:
+            layer = {}
+            layer["name"] = attribut["name"]
+            layer["activation"] = attribut["activation"]
+            layer["theta"] = np.array(attribut["theta"])
+            layer["bias"] = np.array(attribut["bias"])
+            self.layers.append(layer)
+            self.nb_layers += 1
     
     def save(self, path):
         i = self.nb_layers - 1
@@ -114,7 +121,6 @@ class MyNN:
             self.layers[i]["bias"] = self.layers[i]["bias"].tolist()
             i -= 1
         content = json.dumps(self.layers)
-        print(content)
         with open(path, "w") as file:
             file.write(content)
             file.close()
