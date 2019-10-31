@@ -21,7 +21,7 @@ model.load("here.json")
 
 model.summary()
 
-model.compile(0.5, "cross_entropy")
+model.compile(1, "cross_entropy")
 model.fit(X, Y, epoch=200, verbose=1)
 
 
@@ -33,7 +33,7 @@ real = np.argmax(Y_test, axis=1)
 count = 0
 
 for i in range(len(prediction)):
-    print("predicted:",prediction[i], ', real:', real[i])
+    #print("predicted:",prediction[i], ', real:', real[i])
     if prediction[i] == real[i]:
         count += 1
 
