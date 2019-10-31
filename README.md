@@ -3,6 +3,7 @@
 The objective is to implement a Neural Network for classification problem.
 
 In Python => Folder Python
+
 In C      => foldef C (work in progress)
 
 ## Getting Started
@@ -61,4 +62,4 @@ Give an example
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+https://github.com/Gabrielchapo/machine_learning/blob/master/LICENSE
