@@ -60,7 +60,7 @@ python3 main.py
 
 ## Author
 
-* **Gabriel Drai** - *Initial work* 
+* **Gabriel Drai**
 
 ## License
 
