@@ -95,7 +95,7 @@ class MyNN:
             self.feedforward()
             self.backprop()
             if verbose == 1:
-                print("Epoch:", i, "=== Loss:", error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output))
+                print("Epoch:", i, "/", epoch, "=== Loss:", error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output))
 
     def load(self, path):
         try:

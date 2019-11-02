@@ -8,52 +8,53 @@ In C      => foldef C (work in progress)
 
 ## Getting Started
 
-You need to download the MNIST DATASET (Train and test separated) in json encoded and put it in /data file
+You can download the MNIST DATASET (Train and test separated) in json encoded and put it in /data file, and use the GetMnistData class to load it.
 
-### Prerequisites
+Feel free to use your own dataset.
 
-What things you need to install the software and how to install them
+### Usage
 
+First, import the MyNN class
 ```
-Give examples
+from MyNN import MyNN
 ```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+Then, initialize the class
 ```
-Give the example
+model = MyNN()
 ```
-
-And repeat
-
+Then add layers with the density, the input dimensions for the first layer, and the activation function
 ```
-until finished
+model.add_layer(64, input_dim=X.shape[1], activation='sigmoid')
+model.add_layer(64, activation='sigmoid')
+model.add_layer(10, activation='softmax')
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+You can check your model with
 ```
-Give an example
+model.summary()
+```
+Compile your model with the learning rate and loss function
+```
+model.compile(1, "cross_entropy")
+```
+Now your model is ready to be fitted, give the input and the output data, the number of epoch and in option if you want information on each epochs
+```
+model.fit(X, Y, epoch=2000, verbose=1)
+```
+You can now predict with your model
+```
+prediction = model.predict(X_test)
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
+Other way to create your model:
+Use model.load() and model.save() with the path as a paremeter to get and use your model in a json file
 ```
-Give an example
+model.load("here.json")
+model.save("here.json")
+```
+
+Don't hesitate to run the project with the main.py file to get an example
+```
+python3 main.py
 ```
 
 ## Author

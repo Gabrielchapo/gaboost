@@ -13,16 +13,16 @@ Y_test = data.get_Y_test()
 
 model = MyNN()
 
-#model.add_layer(64, input_dim=X.shape[1], activation='sigmoid')
-#model.add_layer(64, activation='sigmoid')
-#model.add_layer(10, activation='softmax')
+model.add_layer(64, input_dim=X.shape[1], activation='sigmoid')
+model.add_layer(64, activation='sigmoid')
+model.add_layer(10, activation='softmax')
 
-model.load("here.json")
+#model.load("here.json")
 
 model.summary()
 
 model.compile(1, "cross_entropy")
-model.fit(X, Y, epoch=200, verbose=1)
+model.fit(X, Y, epoch=2000, verbose=1)
 
 
 prediction = model.predict(X_test)
