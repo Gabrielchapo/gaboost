@@ -5,9 +5,13 @@ import json
 
 class MyNN:
     
+
+
     def __init__(self):
         self.layers = []
         self.nb_layers = 0
+
+
 
     def feedforward(self):
         tmp = self.input
@@ -23,7 +27,10 @@ class MyNN:
                 return
             tmp = self.activated[name]
 
+
+
     def backprop(self):
+
         activated = None
         for attribut in reversed(self.layers):
             name = attribut["name"]
@@ -31,9 +38,9 @@ class MyNN:
                 self.activated_delta[name] = cross_entropy(self.activated[name], self.output)
             else:
                 self.activated_delta[name] = np.dot(activated, tmp) * sigmoid_derv(self.activated[name])
+            
             tmp = attribut["theta"].T
             activated = self.activated_delta[name]
-
         i = self.nb_layers - 1
         while i >= 0:
             name = self.layers[i]["name"]
@@ -47,11 +54,15 @@ class MyNN:
                 self.layers[i]["bias"] -= self.lr * np.sum(self.activated_delta[name], axis=0)
             i -= 1
 
+
+
     def predict(self, data):
         self.input = data
         self.feedforward()
         name = self.layers[self.nb_layers - 1]["name"]
         return self.activated[name].tolist()
+
+
 
     def add_layer(self, size, activation, input_dim=None):
 
@@ -73,15 +84,21 @@ class MyNN:
         self.layers.append(layer)
         self.nb_layers += 1
 
+
+
     def summary(self):
         for attribut in self.layers:
             print("Layer:", attribut["name"], "| Dimensions:", attribut["theta"].shape, "| Activation:", attribut["activation"])
+
+
 
     def compile(self, lr, loss):
         self.lr = lr
         self.loss = loss
         self.activated = {}
         self.activated_delta = {}
+
+
 
     def fit(self, X, Y, epoch, verbose=0):
 
@@ -95,7 +112,9 @@ class MyNN:
             self.feedforward()
             self.backprop()
             if verbose == 1:
-                print("Epoch:", i, "/", epoch, "=== Loss:", error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output))
+                print("Epoch:", i + 1, "/", epoch, "=== Loss:", error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output))
+
+
 
     def load(self, path):
         try:
@@ -113,7 +132,9 @@ class MyNN:
             layer["bias"] = np.array(attribut["bias"])
             self.layers.append(layer)
             self.nb_layers += 1
-    
+
+
+
     def save(self, path):
         i = self.nb_layers - 1
         while i >= 0:
