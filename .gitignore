@@ -2,3 +2,5 @@ mnist_handwritten_test.json
 mnist_handwritten_train.json
 C/obj
 C/machine_learning
+.vscode/
+__pycache__/
