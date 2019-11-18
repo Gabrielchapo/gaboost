@@ -5,6 +5,7 @@ The objective is to implement a Neural Network for classification problem.
 ## Getting Started
 
 You can download the MNIST DATASET (Train and test separated) in json encoded and put it in /data file, and use the GetMnistData class to load it.
+Follow this link to download it : https://github.com/lorenmh/mnist_handwritten_json 
 
 Feel free to use your own dataset.
 
@@ -55,7 +56,7 @@ python3 main.py
 
 ## Author
 
-* **Gabriel Drai** - *Initial work* 
+* **Gabriel Drai**
 
 ## License
 
