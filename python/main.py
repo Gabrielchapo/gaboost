@@ -13,16 +13,17 @@ Y_test = data.get_Y_test()
 
 model = MyNN()
 
-#model.add_layer(64, input_dim=X.shape[1], activation='sigmoid')
-#model.add_layer(64, activation='sigmoid')
-#model.add_layer(10, activation='softmax')
+model.add_layer(30, input_dim=X.shape[1], activation='sigmoid')
+model.add_layer(30, activation='sigmoid')
+model.add_layer(30, activation='sigmoid')
+model.add_layer(10, activation='softmax')
 
-model.load("here.json")
+#model.load("here1.json")
 
 model.summary()
 
-model.compile(1, "cross_entropy")
-model.fit(X, Y, epoch=100, verbose=1)
+model.compile(0.3, "cross_entropy")
+model.fit(X, Y, epoch=30, verbose=1)
 
 
 prediction = model.predict(X_test)
@@ -39,4 +40,4 @@ for i in range(len(prediction)):
 
 print("Accuracy: ", count / len(prediction))
 
-model.save("here.json")
+model.save("here1.json")

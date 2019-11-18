@@ -2,10 +2,6 @@
 
 The objective is to implement a Neural Network for classification problem.
 
-In Python => Folder Python
-
-In C      => foldef C (work in progress)
-
 ## Getting Started
 
 You can download the MNIST DATASET (Train and test separated) in json encoded and put it in /data file, and use the GetMnistData class to load it.

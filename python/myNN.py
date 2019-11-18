@@ -1,6 +1,8 @@
 import numpy as np
 from ft_activation import sigmoid, sigmoid_derv, softmax
 from ft_error import error, cross_entropy
+import matplotlib
+import matplotlib.pyplot as plt
 import json
 
 class MyNN:
@@ -104,6 +106,7 @@ class MyNN:
 
         self.input = X
         self.output = Y
+        self.err = []
 
         if epoch <= 0:
             print("Invalid number of epochs")
@@ -111,8 +114,15 @@ class MyNN:
         for i in range(epoch):
             self.feedforward()
             self.backprop()
+            err = error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output)
+            self.err.append(err)
             if verbose == 1:
-                print("Epoch:", i + 1, "/", epoch, "=== Loss:", error(self.activated[self.layers[self.nb_layers - 1]["name"]], self.output))
+                print("Epoch:", i + 1, "/", epoch, "=== Loss:", err)
+        fig, ax = plt.subplots()
+        ax.plot(self.err)
+        ax.set(xlabel='epochs', ylabel='loss')
+        plt.show()
+        
 
 
 
