@@ -1,4 +1,4 @@
-# Machine Learning from scratch
+# Machine Learning Librairy
 
 The objective is to implement a Neural Network for classification problem.
 
