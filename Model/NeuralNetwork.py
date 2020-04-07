@@ -1,19 +1,95 @@
 import numpy as np
-from ft_activation import sigmoid, sigmoid_derv, softmax
-from ft_error import error, cross_entropy
 import matplotlib
 import matplotlib.pyplot as plt
 import json
 
-class MyNN:
-    
 
+class GetMnistData:
+    def __init__(self, train_path, test_path):
+
+        ## Load and prepare data from mnist_handwritten_train.json
+        try:
+            with open(train_path, 'r') as file:
+                content = file.read()
+                file.close()
+        except:
+            exit("Error: mnist_handwritten_train.json not found")
+        content = json.loads(content)
+
+        try:
+            X = []
+            Y = []
+            for x in content:
+                X.append(x["image"])
+                Y.append(x["label"])
+        except:
+            exit("Error: incorrect JSON format")
+        self.X_train = np.array(X, float)
+        self.Y_train = np.zeros((self.X_train.shape[0], 10), float)
+        # preparing one-hot label Y train
+        i = 0
+        for y in Y:
+            self.Y_train[i][y] = 1
+            i += 1
+
+        ## Load and prepare data from mnist_handwritten_test.json
+        try:
+            with open(test_path, 'r') as file:
+                content = file.read()
+                file.close()
+        except:
+            exit("Error: mnist_handwritten_test.json not found")
+        content = json.loads(content)
+
+        try:
+            X = []
+            Y = []
+            for x in content:
+                X.append(x["image"])
+                Y.append(x["label"])
+        except:
+            exit("Error: incorrect JSON format")
+        self.X_test = np.array(X, float)
+        self.Y_test = np.zeros((self.X_test.shape[0], 10), float)
+
+        # preparing one-hot label Y test
+        i = 0
+        for y in Y:
+            self.Y_test[i][y] = 1
+            i += 1
+
+    def get_X_train(self):
+        return self.X_train
+    def get_Y_train(self):
+        return self.Y_train
+    def get_X_test(self):
+        return self.X_test
+    def get_Y_test(self):
+        return self.Y_test
+
+def cross_entropy(Y_pred, Y_real):
+    diff = Y_pred - Y_real
+    return diff / Y_real.shape[0]
+
+def error(Y_pred, Y_real):
+    logged = - np.log(Y_pred[np.arange(Y_real.shape[0]), Y_real.argmax(axis=1)])
+    return np.sum(logged) / Y_real.shape[0]
+
+def sigmoid_derv(s):
+    return s * (1 - s)
+
+def sigmoid(s):
+    return 1/(1 + np.exp(-s))
+
+def softmax(s):
+    exps = np.exp(s - np.max(s, axis=1, keepdims=True))
+    return exps/np.sum(exps, axis=1, keepdims=True)
+
+class NeuralNetwork:
 
     def __init__(self):
         self.layers = []
         self.nb_layers = 0
-
-
 
     def feedforward(self):
         tmp = self.input
@@ -28,8 +104,6 @@ class MyNN:
                 print("Error: Unknown or invalid activation function")
                 return
             tmp = self.activated[name]
-
-
 
     def backprop(self):
 
@@ -56,15 +130,11 @@ class MyNN:
                 self.layers[i]["bias"] -= self.lr * np.sum(self.activated_delta[name], axis=0)
             i -= 1
 
-
-
     def predict(self, data):
         self.input = data
         self.feedforward()
         name = self.layers[self.nb_layers - 1]["name"]
         return self.activated[name].tolist()
-
-
 
     def add_layer(self, size, activation, input_dim=None):
 
@@ -86,21 +156,15 @@ class MyNN:
         self.layers.append(layer)
         self.nb_layers += 1
 
-
-
     def summary(self):
         for attribut in self.layers:
             print("Layer:", attribut["name"], "| Dimensions:", attribut["theta"].shape, "| Activation:", attribut["activation"])
-
-
 
     def compile(self, lr, loss):
         self.lr = lr
         self.loss = loss
         self.activated = {}
         self.activated_delta = {}
-
-
 
     def fit(self, X, Y, epoch, verbose=0):
 
@@ -122,9 +186,6 @@ class MyNN:
         ax.plot(self.err)
         ax.set(xlabel='epochs', ylabel='loss')
         plt.show()
-        
-
-
 
     def load(self, path):
         try:
@@ -142,8 +203,6 @@ class MyNN:
             layer["bias"] = np.array(attribut["bias"])
             self.layers.append(layer)
             self.nb_layers += 1
-
-
 
     def save(self, path):
         i = self.nb_layers - 1

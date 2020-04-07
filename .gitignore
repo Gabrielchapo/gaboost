@@ -1,6 +1,23 @@
 mnist_handwritten_test.json
 mnist_handwritten_train.json
-C/obj
-C/machine_learning
+
 .vscode/
 __pycache__/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# vs code
+/.vscode/
+
+# mnist data
+data/mnist_handwritten_test.json
+data/mnist_handwritten_train.json
+
+# NeuralNetwork Weights
+Weights.json
