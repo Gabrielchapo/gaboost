@@ -21,5 +21,5 @@ print(model.predict([[8.860e+01, 1.688e+02, 6.410e+01, 4.880e+01, 2.548e+03, 1.3
        3.470e+00, 2.680e+00, 9.000e+00, 1.110e+02, 5.000e+03, 2.100e+01,
        2.700e+01]]))"""
 
-tmp = CrossValidation(model, X, Y, 5)
+tmp = CrossValidation(model, X, Y, 10)
 print(tmp.accuracy())

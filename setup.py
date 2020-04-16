@@ -27,7 +27,8 @@ def main():
             "C_module/sources/error_functions.c",
             "C_module/sources/2D_matrix.c",
             "C_module/sources/linear_regression.c",
-            "C_module/sources/logistic_regression.c"
+            "C_module/sources/logistic_regression.c",
+            "C_module/sources/neural_network.c"
             ])])
 
 if __name__ == "__main__":
