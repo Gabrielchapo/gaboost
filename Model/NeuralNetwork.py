@@ -36,7 +36,7 @@ class NeuralNetwork:
     def fit(self, X, Y, epoch, normalize=False):
         self.sigma = [np.amax(x) - np.amin(x) if np.amax(x) - np.amin(x) != 0 else 1 for x in zip(*X)]
         self.mean = [sum(x) / len(X) for x in zip(*X)]
-        #X = (X - self.mean) / self.sigma
+        X = (X - self.mean) / self.sigma
         X = [list(x) for x in X]
         Y = [list(y) for y in Y]
         b = []

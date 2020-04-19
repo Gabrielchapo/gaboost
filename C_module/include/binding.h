@@ -34,21 +34,22 @@ PyObject    *neural_network_fit(PyObject *self, PyObject *args);
 PyObject	*neural_network_predict(PyObject *self, PyObject *args);
 
 /*
-** utils.c
-*/
-t_2D_matrix	initialize_weights(int nb_row, int nb_col);
-
-/*
 ** 2D_matrix.c
 */
 void        print_t_2D_matrix(t_2D_matrix matrix);
+void		print_t_2D_matrix_shapes(t_2D_matrix matrix);
+t_2D_matrix	create_matrix_with_val(int nb_row, int nb_col, double val);
+t_2D_matrix	deep_copy_matrix(t_2D_matrix a);
 t_2D_matrix	transposed_matrix(t_2D_matrix a);
+void		transpose_matrix(t_2D_matrix *a);
 t_2D_matrix	dot_product(t_2D_matrix a, t_2D_matrix b);
-t_2D_matrix	dot_product_with_bias(t_2D_matrix a, t_2D_matrix b, t_2D_matrix bias);
-t_2D_matrix	diff_t_2D_matrix(t_2D_matrix a, t_2D_matrix b);
-t_2D_matrix	mult_t_2D_matrix(t_2D_matrix a, t_2D_matrix b);
-t_2D_matrix	sum_in_t_2D_matrix(t_2D_matrix a);
-t_2D_matrix scalar_mult_t_2D_matrix(t_2D_matrix a, double b);
+void		dot_productt(t_2D_matrix a, t_2D_matrix b, t_2D_matrix c);
+void    	diff_t_2D_matrix(t_2D_matrix a, t_2D_matrix b);
+void    	mult_t_2D_matrix(t_2D_matrix a, t_2D_matrix b);
+void		sum_in_t_2D_matrix(t_2D_matrix a, t_2D_matrix b);
+void        scalar_mult_t_2D_matrix(t_2D_matrix a, double b);
+void		free_matrix(t_2D_matrix a);
+void		copy_matrix(t_2D_matrix a, t_2D_matrix b);
 
 /*
 ** python_utils.c
@@ -63,6 +64,6 @@ double		mean_square_error(t_2D_matrix X, t_2D_matrix Y, t_2D_matrix W);
 double		cross_entropy(t_2D_matrix X, t_2D_matrix Y, t_2D_matrix W);
 void		softmax(t_2D_matrix predicted);
 void		sigmoid(t_2D_matrix predicted);
-t_2D_matrix	sigmoid_derv(t_2D_matrix a);
+void    	sigmoid_derv(t_2D_matrix a);
 
 #endif

@@ -13,33 +13,60 @@ PyObject	*logistic_regression_fit(PyObject *self, PyObject *args)
     	return NULL;
 
 	t_2D_matrix X = parsing(list_X, 1);
-	t_2D_matrix X_T = transposed_matrix(X);
 	t_2D_matrix Y = parsing(list_Y, 0);
-	t_2D_matrix W = initialize_weights(X.nb_col, Y.nb_col);
+
+	/********************
+	** USEFUL VARIABLES *
+	********************/
+
+	t_2D_matrix X_T = deep_copy_matrix(X);
+	transpose_matrix(&X_T);
+	t_2D_matrix W = create_matrix_with_val(X.nb_col, Y.nb_col, 1.0);
+	t_2D_matrix predicted = create_matrix_with_val(X.nb_row, W.nb_col, 0.0);
+	t_2D_matrix d_W = create_matrix_with_val(X_T.nb_row, predicted.nb_col, 0.0);
 
 	if (PyErr_Occurred()) return NULL;
 
 	/************
 	** TRAINING *
 	************/
+	double initial_cost = -1;
+	double cost = -2;
 
-	for (int epoch=0; epoch < 3000; epoch++)
+	for (int epoch = 0; fabs((cost-initial_cost)/initial_cost) > 0.001 ; epoch++)
 	{
-		// GET Gradient vector
-		t_2D_matrix predicted = dot_product(X, W);
+		initial_cost = cost;
+		dot_productt(X, W, predicted);
 		softmax(predicted);
-		if (PyErr_Occurred()) return NULL;
+		// prediction - target values
 		for (int i = 0; i < predicted.nb_row * predicted.nb_col; i++)
 			predicted.values[i] -= Y.values[i];
-		t_2D_matrix d_W = dot_product(X_T, predicted);
+		
+		// GET Gradient vector d_W
+		dot_productt(X_T, predicted, d_W);
 
 		// UPDATE weights W
 		for (int i = 0; i < W.nb_row * W.nb_col; i++)
 			W.values[i] -= ((0.05 / X.nb_row) * d_W.values[i]);
-		printf("epoch %d, loss %f\n", epoch, cross_entropy(X, Y, W));	
+		
+		if (PyErr_Occurred()) return NULL;
+		cost = cross_entropy(X, Y, W);
+		printf("epoch %d, cost:%f\n", epoch, cost);
 	}
 
-  	return create_PyObject_from_t_2D_matrix(W);
+	/*********************************************
+	** CREATING PYTHON OBJECT AND FREE VARIABLES *
+	*********************************************/
+	
+	PyObject *list_W = create_PyObject_from_t_2D_matrix(W);
+	free_matrix(W);
+	free_matrix(X);
+	free_matrix(Y);
+	free_matrix(d_W);
+	free_matrix(predicted);
+	free_matrix(X_T);
+
+  	return list_W;
 }
 
 PyObject	*logistic_regression_predict(PyObject *self, PyObject *args)
@@ -57,16 +84,25 @@ PyObject	*logistic_regression_predict(PyObject *self, PyObject *args)
 	t_2D_matrix X = parsing(list_X, 1);
 	t_2D_matrix W = parsing(list_W, 0);
 
+	t_2D_matrix predicted = create_matrix_with_val(X.nb_row, W.nb_col, 0.0);
+
 	if (PyErr_Occurred()) return NULL;
 
-	/***********
-	** PREDICT *
-	***********/
+	/**************
+	** PREDICTING *
+	**************/
 
-	t_2D_matrix predicted = dot_product(X, W);
+	dot_productt(X, W, predicted);
 	softmax(predicted);
-
-	if (PyErr_Occurred()) return NULL;
 	
-	return create_PyObject_from_t_2D_matrix(predicted);
+	/*********************************************
+	** CREATING PYTHON OBJECT AND FREE VARIABLES *
+	*********************************************/
+	
+	PyObject *list_predicted = create_PyObject_from_t_2D_matrix(predicted);
+	free_matrix(W);
+	free_matrix(X);
+	free_matrix(predicted);
+	
+  	return list_predicted;
 }

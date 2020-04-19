@@ -22,7 +22,6 @@ def main():
           author_email="gabrieldrai@yahoo.fr",
           ext_modules=[Extension("C_module", [
             "C_module/sources/binding.c",
-            "C_module/sources/utils.c",
             "C_module/sources/python_utils.c",
             "C_module/sources/error_functions.c",
             "C_module/sources/2D_matrix.c",

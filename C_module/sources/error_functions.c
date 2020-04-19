@@ -18,25 +18,13 @@ void		softmax(t_2D_matrix matrix)
 void		sigmoid(t_2D_matrix matrix)
 {
 	for (int i = 0; i < matrix.nb_row * matrix.nb_col; i++)
-	{
-		matrix.values[i] = 1 / (1 + exp(-matrix.values[i]));
-	}
+		matrix.values[i] = 1.0 / (1.0 + exp(-matrix.values[i]));
 }
 
-t_2D_matrix	sigmoid_derv(t_2D_matrix a)
+void		sigmoid_derv(t_2D_matrix a)
 {
-	t_2D_matrix matrix;
-
-	matrix.nb_row = a.nb_row;
-	matrix.nb_col = a.nb_col;
-	if (!(matrix.values = (double*)malloc(sizeof(double) * matrix.nb_col * matrix.nb_row)))
-	{
-		PyErr_SetString(PyExc_MemoryError, "Memory allocation failed");
-		return matrix;
-	}
-	for (int i = 0; i < matrix.nb_row * matrix.nb_col; i++)
-		matrix.values[i] = a.values[i] * (1.0 - a.values[i]);
-	return matrix;
+	for (int i = 0; i < a.nb_row * a.nb_col; i++)
+		a.values[i] *= (1.0 - a.values[i]);
 }
 
 double		mean_square_error(t_2D_matrix X, t_2D_matrix Y, t_2D_matrix W)

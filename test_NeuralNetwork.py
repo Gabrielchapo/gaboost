@@ -15,6 +15,7 @@ model = NeuralNetwork()
 
 
 model.add_layer(30, input_dim=X.shape[1], activation='sigmoid')
+model.add_layer(30, activation='sigmoid')
 model.add_layer(10, activation='softmax')
 
 #model.load("weights.json")
@@ -24,7 +25,7 @@ model.summary()
 model.compile(0.3, "cross_entropy")
 
 model.fit(X, Y, epoch=3000, normalize=True)
-"""
+
 prediction = model.predict(X_test)
 prediction = np.argmax(prediction, axis=1)
 real = np.argmax(Y_test, axis=1)
@@ -36,6 +37,6 @@ for i in range(len(prediction)):
         count += 1
 
 print("Accuracy: ", count / len(prediction))
-"""
+
 
 #model.save("weights.json")

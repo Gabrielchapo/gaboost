@@ -13,7 +13,6 @@ class GetMnistData:
         except:
             exit("Error: mnist_handwritten_train.json not found")
         content = json.loads(content)
-        content = content[:80]
         try:
             X = []
             Y = []
@@ -38,7 +37,6 @@ class GetMnistData:
         except:
             exit("Error: mnist_handwritten_test.json not found")
         content = json.loads(content)
-        content = content[:80]
         try:
             X = []
             Y = []
