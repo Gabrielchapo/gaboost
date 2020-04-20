@@ -20,7 +20,7 @@ class LogisticRegression:
             X = (X - self.mean) / self.sigma
             X = [list(x) for x in X]
 
-        self.weights = C_module.logistic_regression_fit(X,Y)
+        self.weights = C_module.regression_fit(X, Y, 1)
 
     def predict(self, X):
 
@@ -52,7 +52,7 @@ class LogisticRegression:
             if self.normalize == True:
                 X = [[(X - self.mean) / self.sigma]]
 
-        return C_module.logistic_regression_predict(X,self.weights)
+        return C_module.regression_predict(X, self.weights, 1)
         
     def evaluate(self, X_test, Y_test):
         predictions = self.predict(X_test)

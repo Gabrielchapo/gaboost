@@ -2,10 +2,6 @@
 
 void		print_t_2D_matrix(t_2D_matrix matrix)
 {
-	FILE *File;
-
-    File = fopen("file.txt", "w+");
-
 	for (int i = 0; i < matrix.nb_row * matrix.nb_col; i++)
 	{
 		if (i != 0 && i % matrix.nb_col == 0)
@@ -183,4 +179,39 @@ void		sum_in_t_2D_matrix(t_2D_matrix a, t_2D_matrix b)
 	}
 	else
 		PyErr_SetString(PyExc_ValueError, "Value error in addition");
+}
+
+void	myprint(int nb_row, int nb_col, float matrix[nb_row][nb_col])
+{
+	for (int i = 0; i < nb_row; i++)
+	{
+		for (int j = 0; j < nb_col; j++)
+			printf("%f ", matrix[i][j]);
+		printf("\n");
+	}
+}
+
+void	dot(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ax][by])
+{
+	for (int i = 0; i < ax; i++)
+	{
+		for (int j = 0; j < by; j++)
+		{
+			c[i][j] = 0;
+			for (int k = 0; k < ay; k++)
+				c[i][j] += a[i][k] * b[k][j];
+		}
+	}
+}
+void	dot_T(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ay][by])
+{
+	for (int i = 0; i < ay; i++)
+	{
+		for (int j = 0; j < by; j++)
+		{
+			c[i][j] = 0;
+			for (int k = 0; k < ax; k++)
+				c[i][j] += a[k][i] * b[k][j];
+		}
+	}
 }

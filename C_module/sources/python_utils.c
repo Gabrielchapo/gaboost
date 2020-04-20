@@ -53,3 +53,33 @@ t_2D_matrix	parsing(PyObject *list, int bias)
   	}
 	return matrix;
 }
+
+void	parsingg(PyObject *list, int bias, int nb_row, int nb_col, float matrix[nb_row][nb_col])
+{
+	for (int i = 0; i < nb_row; i++)
+	{
+		PyObject *sublist = PyList_GetItem(list, i);
+		for (int j = 0; j < nb_col - bias; j++)
+			matrix[i][j] = PyFloat_AsDouble(PyList_GetItem(sublist, j));
+		if (bias == 1)
+			matrix[i][nb_col - 1] = 1;
+	}
+}
+
+PyObject	*create_return(int nb_row, int nb_col, float matrix[nb_row][nb_col])
+{
+	PyObject* python_val = PyList_New(nb_row);
+	for (int i = 0; i < nb_row; i++)
+	{
+		if (nb_col == 1)
+			PyList_SetItem(python_val, i, Py_BuildValue("f", matrix[i][0]));
+		else
+		{
+			PyObject* sub = PyList_New(nb_col);
+			for (int j = 0; j < nb_col; j++)
+				PyList_SetItem(sub, j, Py_BuildValue("f", matrix[i][j]));
+			PyList_SetItem(python_val, i, sub);
+		}
+	}
+	return python_val;
+}

@@ -40,7 +40,7 @@ class LinearRegression:
             X = [X]
         Y = [[y] for y in Y]
         Y = list(Y)
-        self.weights = C_module.linear_regression_fit(X,Y)
+        self.weights = C_module.regression_fit(X, Y, 0)
     
     def predict(self, X):
 
@@ -73,7 +73,7 @@ class LinearRegression:
                 X = [[(X - self.mean) / self.sigma]]
 
         self.weights = [[x] for x in self.weights]
-        return C_module.linear_regression_predict(X,self.weights)
+        return C_module.regression_predict(X, self.weights, 0)
     
     def evaluate(self, X_test, Y_test):
         predictions = self.predict(X_test)

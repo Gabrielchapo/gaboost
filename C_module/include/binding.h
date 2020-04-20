@@ -15,6 +15,14 @@ typedef struct  s_2D_matrix
     double      *values;
 }               t_2D_matrix;
 
+typedef struct  s_size
+{
+    int         nb_row;
+    int         nb_col;
+}               t_size;
+
+PyObject	*regression_fit(PyObject *self, PyObject *args);
+PyObject	*regression_predict(PyObject *self, PyObject *args);
 /*
 ** linear_regression.c
 */
@@ -51,19 +59,31 @@ void        scalar_mult_t_2D_matrix(t_2D_matrix a, double b);
 void		free_matrix(t_2D_matrix a);
 void		copy_matrix(t_2D_matrix a, t_2D_matrix b);
 
+void	myprint(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
+void	dot(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ax][by]);
+void	dot_T(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ay][by]);
+
+
 /*
 ** python_utils.c
 */
 PyObject	*create_PyObject_from_t_2D_matrix(t_2D_matrix a);
 t_2D_matrix parsing(PyObject *list, int bias);
+void	    parsingg(PyObject *list, int bias, int nb_row, int nb_col, float matrix[nb_row][nb_col]);
+PyObject	*create_return(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
 
 /*
 ** error_functions.c
 */
-double		mean_square_error(t_2D_matrix X, t_2D_matrix Y, t_2D_matrix W);
-double		cross_entropy(t_2D_matrix X, t_2D_matrix Y, t_2D_matrix W);
+double		mse(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ay][by]);
+double		ce(int ax, int ay, float a[ax][ay], int bx, int by, float b[bx][by], float c[ay][by], float d[ax][by]);
+
+/*
+** activation_functions.c
+*/
 void		softmax(t_2D_matrix predicted);
 void		sigmoid(t_2D_matrix predicted);
 void    	sigmoid_derv(t_2D_matrix a);
+void		sm(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
 
 #endif
