@@ -30,6 +30,24 @@ void		sm(int nb_row, int nb_col, float matrix[nb_row][nb_col])
 	}
 }
 
+void		sigmoidd(int nb_row, int nb_col, float matrix[nb_row][nb_col])
+{
+	for (int i = 0; i < nb_row; i++)
+	{
+		for (int j = 0 ; j < nb_col ; j++)
+			matrix[i][j] = 1.0 / (1.0 + exp(-matrix[i][j]));
+	}
+}
+
+void		sigmoidd_derv(int nb_row, int nb_col, float matrix[nb_row][nb_col])
+{
+	for (int i = 0; i < nb_row; i++)
+	{
+		for (int j = 0 ; j < nb_col ; j++)
+			matrix[i][j] *= (1.0 - matrix[i][j]);
+	}
+}
+
 void		sigmoid(t_2D_matrix matrix)
 {
 	for (int i = 0; i < matrix.nb_row * matrix.nb_col; i++)

@@ -85,5 +85,7 @@ void		softmax(t_2D_matrix predicted);
 void		sigmoid(t_2D_matrix predicted);
 void    	sigmoid_derv(t_2D_matrix a);
 void		sm(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
+void		sigmoidd(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
+void		sigmoidd_derv(int nb_row, int nb_col, float matrix[nb_row][nb_col]);
 
 #endif
