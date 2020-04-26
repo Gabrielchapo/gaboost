@@ -47,7 +47,7 @@ PyObject	*regression_fit(PyObject *self, PyObject *args)
 	double initial_cost = -1;
 	double cost = -2;
 
-	for (int epoch = 0; fabs((cost-initial_cost)/initial_cost) > 0.001 ; epoch++)
+	for (int epoch = 0; fabs((cost-initial_cost)/initial_cost) > 0.00000000001 ; epoch++)
 	{
 		initial_cost = cost;
 		dot(size_X.nb_row, size_X.nb_col, X, size_W.nb_row, size_W.nb_col, W, pred);

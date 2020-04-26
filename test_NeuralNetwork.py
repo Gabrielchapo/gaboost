@@ -16,6 +16,7 @@ model = NeuralNetwork()
 
 model.add_layer(30, input_dim=X.shape[1], activation='sigmoid')
 model.add_layer(30, activation='sigmoid')
+model.add_layer(30, activation='sigmoid')
 model.add_layer(10, activation='softmax')
 
 #model.load("weights.json")

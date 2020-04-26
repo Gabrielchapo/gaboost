@@ -69,7 +69,6 @@ PyObject	*neural_network_fit(PyObject *self, PyObject *args)
 		// FEED FORWARD
 		for (int i = 0; i < nb_layers; i++)
 		{
-			
 			(i == 0) ? dot_product_with_bias(X, W[i], bias[i], activation[i]) : dot_product_with_bias(activation[i-1], W[i], bias[i], activation[i]);
 			(i == nb_layers - 1) ? softmax(activation[i]) : sigmoid(activation[i]);
 		}
@@ -94,6 +93,7 @@ PyObject	*neural_network_fit(PyObject *self, PyObject *args)
 				if (PyErr_Occurred()) return NULL;
 			}
 		}
+		print_t_2D_matrix(activation[nb_layers - 1]);
 		if (PyErr_Occurred()) return NULL;
 		for (int i = 0; i < nb_layers; i++)
 		{
